@@ -1,7 +1,7 @@
-var express = require('express');
-var bodyParser = require('body-parser');
+const express = require('express');
+const bodyParser = require('body-parser');
 
-var dishRouter = express.Router();
+const dishRouter = express.Router();
 
 dishRouter.use(bodyParser.json());
 
