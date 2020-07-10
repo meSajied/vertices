@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-
+// for jsonwebtoken
+var authenticate = require('../authenticate');
 const dishRouter = express.Router();
 
 dishRouter.use(bodyParser.json());
@@ -44,3 +45,91 @@ dishRouter.route('/:dishId')
 	});
 
 exports.router = dishRouter;
+
+// for jsonwebtoken...
+dishRouter.route('/')
+
+
+	.post(authenticate.verifyUser, (req, res, next) => {
+
+	
+
+	})
+
+	.put(authenticate.verifyUser, (req, res, next) => {
+
+	
+
+	})
+
+	.delete(authenticate.verifyUser, (req, res, next) => {
+
+	
+
+	});
+
+
+dishRouter.route('/:dishId')
+
+
+	.post(authenticate.verifyUser, (req, res, next) => {
+
+	
+
+	})
+
+	.put(authenticate.verifyUser, (req, res, next) => {
+
+	
+
+	})
+
+	.delete(authenticate.verifyUser, (req, res, next) => {
+
+	
+
+	});
+
+
+dishRouter.route('/:dishId/comments')
+
+
+	.post(authenticate.verifyUser, (req, res, next) => {
+
+	
+
+	})
+
+	.put(authenticate.verifyUser, (req, res, next) => {
+
+	
+
+	})
+
+	.delete(authenticate.verifyUser, (req, res, next) => {
+
+	
+
+	});
+
+
+dishRouter.route('/:dishId/comments/:commentId')
+
+
+	.post(authenticate.verifyUser, (req, res, next) => {
+
+	
+
+	})
+
+	.put(authenticate.verifyUser, (req, res, next) => {
+
+	
+
+	})
+
+	.delete(authenticate.verifyUser, (req, res, next) => {
+
+	
+
+	});

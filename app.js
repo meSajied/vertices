@@ -3,6 +3,12 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var passport = require('passport');
+// for passport....
+var authenticate = require('./authenticate');
+
+// for jsonwebtoken
+var config = require('./config');
 
 //we wont use cookie while using session....
 var session = require('express-session');
@@ -17,6 +23,9 @@ const mongoose = require('mongoose');
 
 const Dishes = require('./mongoose/schema');
 
+// for jsonwebtoken
+const url = config.mongoUrl;
+//for mongoose...
 const url = 'mongodb://localhost:27017/conFusion';
 const connect = mongoose.connect(url);
 
@@ -27,7 +36,8 @@ connect.then((db) => {
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
-
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -171,6 +181,20 @@ function auth (req, res, next) {
       err.status = 403;
       return next(err);
     }
+  }
+}
+
+//This will be used for passport....
+function auth (req, res, next) {
+  console.log(req.user);
+
+  if (!req.user) {
+    var err = new Error('You are not authenticated!');
+    err.status = 403;
+    next(err);
+  }
+  else {
+    next();
   }
 }
 

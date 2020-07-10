@@ -1,5 +1,6 @@
 const bodyParser = require('body-parser');
-var User = require('../models/user');
+var User = require('../mongoose/user');
+var authenticate = require('../authenticate');
 
 router.use(bodyParser.json());
 router.post('/signup', (req, res, next) => {
@@ -13,7 +14,8 @@ router.post('/signup', (req, res, next) => {
         else {
           return User.create({
             username: req.body.username,
-            password: req.body.password});
+            password: req.body.password
+          });
         }
       })
       .then((user) => {
@@ -36,7 +38,8 @@ router.post('/login', (req, res, next) => {
       return next(err);
     }
 
-    var auth = new Buffer.from(authHeader.split(' ')[1], 'base64').toString().split(':');
+    var auth = new Buffer.from(authHeader.split(' ')[1], 'base64')
+                                                            .toString().split(':');
     var username = auth[0];
     var password = auth[1];
 
@@ -79,4 +82,13 @@ router.get('/logout', (req, res) => {
     err.status = 403;
     next(err);
   }
+});
+
+// while using jsonwebtoken
+router.post('/login', passport.authenticate('local'), (req, res) => {
+
+    var token = authenticate.getToken({_id: req.user._id});
+    res.statusCode = 200;
+    res.setHeader('Content-Type', 'application/json');
+    res.json({success: true, token: token, status: 'You are successfully logged in!'});
 });
