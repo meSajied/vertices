@@ -16,6 +16,8 @@
     "mongodb": "^3.5.9",
     "morgan": "~1.9.1",
     "mongoose": "^5.9.22",
-    "mongoose-currency": "^0.2.0"
+    "mongoose-currency": "^0.2.0",
+    "express-session": "^1.17.1",
+    "session-file-store": "^1.4.0"
   }
 }
