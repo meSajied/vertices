@@ -45,6 +45,16 @@ app.use(cookieParser());
 app.use(cookieParser('12345-67890-09876-54321')); // if we use signed cookies
 app.use(express.static(path.join(__dirname, 'public')));
 
+//for https
+app.all('*', (req, res, next) => {
+  if (req.secure) {
+    return next();
+  }
+  else {
+    res.redirect(307, 'https://' + req.hostname + ':' + app.get('secPort') + req.url);
+  }
+});
+
 function auth (req, res, next) {
   console.log(req.headers);
   var authHeader = req.headers.authorization;
