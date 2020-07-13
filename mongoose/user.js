@@ -7,6 +7,8 @@ var User = new Schema({
 		required: true,
 		unique: true
 	},
+	// if we use facebook oAuth...
+	facebookId: String,
 	password:  {
 		type: String,
 		required: true
